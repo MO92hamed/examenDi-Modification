@@ -47,7 +47,7 @@ public class LivreController {
     }
 
     // delete all Livres rest api
-    @DeleteMapping()
+    @DeleteMapping
     public ResponseEntity<Map<String, Boolean>> deleteAllLivres(){
         livreService.deleteAll();
         Map<String, Boolean> response = new HashMap<>();
