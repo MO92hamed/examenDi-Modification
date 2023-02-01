@@ -109,13 +109,70 @@ This is an simple backend using Java / Maven / Spring boot with postgresql datab
           database: postgresql
           database-platform: org.hibernate.dialect.PostgreSQLDialect
           
+          
+  ## RoadMap of Application:
+    - Create an Entity : Livre
+    - create Livre repository extends from JpaRepositoryaith args Livre.class and id Type -> Long
+    - Livre Service with all api services in this application: 
+            
+            
+    - livre controller with all application requests:
+         Get Requests:
+            * getAllLivre()
+            * getLivreById(Long id)
+            * getLivreByTitle(String title)
+            
+         Delete Requests:
+            * deleteById(Long id)
+            * deleteAll()
+            
+         Post request:
+            * addLivre(Livre livre)
+            * updateLivre(Long id, Livre livre)
+            
+            
+           
+  
   ### Application's exception
    *  Create an abstract class called ApiBaseException who extends from RuntimeException where we create an abstract Method called getStatusCode() return an HttpStatus.
+                            
+                            public abstract class ApiBaseException extends RuntimeException{
+
+                                 public ApiBaseException(String message) {
+                                     super(message);
+                                 }
+
+                                 public abstract HttpStatus getStatusCode();
+                             }
+      
        *create some exceptions who extends from ApiBaseException : 
-                  ConflictException : for verification data before we inserted in database
-                  RessourceNotFoundException 
-                  an Global exception with Annotation `@ExceptionHandler(ApiBaseException.class)` , Overriding handleMethodArgumentNotValid for validation of insertion an updation of data, 
-                  where we define Entity with spring validation (@NotNull, @Size, @Valid)
+             ConflictException : for verification data before we inserted in database
+          
+                            public class ConflictException extends ApiBaseException{
+                                public ConflictException(String message) {
+                                      super(message);
+                                }
+
+                                @Override
+                                public HttpStatus getStatusCode() {
+                                    return HttpStatus.CONFLICT;
+                                }
+                            }
+                  
+         RessourceNotFoundException :
+                              
+                              public class RessourceNotFoundException extends ApiBaseException {
+                              public RessourceNotFoundException(String message){
+                                  super(message);
+                              }
+
+                              @Override
+                              public HttpStatus getStatusCode(){
+                                  return HttpStatus.NOT_FOUND;
+                              }
+                          }
+         
+         an Global exception with Annotation `@ExceptionHandler(ApiBaseException.class)` , Overriding handleMethodArgumentNotValid for validation of insertion an                updation of data, where we define Entity with spring validation (@NotNull, @Size, @Valid)
                               
                               @ExceptionHandler(ApiBaseException.class)
                               public ResponseEntity<ErrorDetails> handleApiException(ApiBaseException ex, WebRequest request){
@@ -142,4 +199,29 @@ This is an simple backend using Java / Maven / Spring boot with postgresql datab
 
                               return new ResponseEntity<>(validationErrors, HttpStatus.BAD_REQUEST);
                           }
+                          
+                          
+        #### Customize Error:
+        
+              public class ErrorDetails {
+                  private String message;
+                  private String uri;
+                  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+                  private Date timestamp;
+
+                  public ErrorDetails() {
+                      this.timestamp = new Date();
+                  }
+
+                  public ErrorDetails(String message, String uri) {
+                      this();
+                      this.message = message;
+                      this.uri = uri;
+                  }
+
+                 /*
+                    Getters & Setters
+                 */   
+              }
+
        
