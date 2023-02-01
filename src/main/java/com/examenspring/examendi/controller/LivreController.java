@@ -2,6 +2,7 @@ package com.examenspring.examendi.controller;
 
 import com.examenspring.examendi.model.Livre;
 import com.examenspring.examendi.service.LivreService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/livres")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:8081")
 public class LivreController {
 
     @Autowired
@@ -31,10 +32,16 @@ public class LivreController {
     }
 
     // get Livre by title rest api
-    @GetMapping("/")
+   /*@GetMapping("/")
     public ResponseEntity<List<Livre>> getLivreByTitle(@RequestParam Optional<String> title){
         List<Livre> livres= livreService.findLivreByTitle(title);
         return ResponseEntity.ok(livres);
+    }*/
+
+    @GetMapping("/")
+    public ResponseEntity<Livre> getLivreByTitle(@RequestParam String title){
+        Livre livre= livreService.findLivreByTitle(title);
+        return ResponseEntity.ok(livre);
     }
 
     // delete Livre by id rest api
@@ -57,13 +64,13 @@ public class LivreController {
 
     // create Livre rest api
     @PostMapping
-    public Livre addNewLivre(@RequestBody Livre livre){
+    public  Livre addNewLivre(@Valid @RequestBody Livre livre){
         return livreService.createNewLivre(livre);
     }
 
     // update Livre by id rest api
     @PutMapping("/{id}")
-    public ResponseEntity<Livre> updateLivreById(@PathVariable Long id, @RequestBody Livre livre){
+    public ResponseEntity<Livre> updateLivreById(@Valid @PathVariable Long id, @RequestBody Livre livre){
         Livre updatedLivre = livreService.updateById(id, livre);
         return ResponseEntity.ok(updatedLivre);
     }

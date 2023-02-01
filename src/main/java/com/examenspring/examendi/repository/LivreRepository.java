@@ -10,8 +10,10 @@ import java.util.List;
 
 @Repository
 public interface LivreRepository extends JpaRepository<Livre, Long> {
-//    @Query(value = "select l from Livre l where title like %?1%")
-    List<Livre> findByTitle(String title);
+    //@Query(value = "select l from Livre l where title like %?1%")
+    /*List<Livre> findByTitle(String title);*/
+    Livre findByTitle(String title);
+
     /*Optional<Livre> findByTitle(String title);*/
 
 }
