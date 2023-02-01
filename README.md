@@ -203,6 +203,8 @@ This is an simple backend using Java / Maven / Spring boot with postgresql datab
                           
         #### Customize Error:
         
+            1/
+        
               public class ErrorDetails {
                   private String message;
                   private String uri;
@@ -222,6 +224,31 @@ This is an simple backend using Java / Maven / Spring boot with postgresql datab
                  /*
                     Getters & Setters
                  */   
+              }
+              
+              
+              2/
+              
+              
+              public class ValidationError {
+
+                  private List<String> errors;
+                  private String uri;
+                  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+                  private Date timesTamp;
+
+                  public ValidationError() {
+                      this.timesTamp = new Date();
+                      this.errors = new ArrayList<>();
+                  }
+
+                  public void addError(String error){
+                      this.errors.add(error);
+                  }
+
+                  /*
+                    Getters & Setters
+                 */  
               }
 
        
