@@ -109,9 +109,9 @@ This is an simple backend using Java / Maven / Spring boot with postgresql datab
           database: postgresql
           database-platform: org.hibernate.dialect.PostgreSQLDialect
           
-    ### Application's exception
-       *  Create an abstract class called ApiBaseException who extends from RuntimeException where we create an abstract Method called getStatusCode() return an HttpStatus.
-       *  create some exceptions who extends from ApiBaseException : 
+  ### Application's exception
+   *  Create an abstract class called ApiBaseException who extends from RuntimeException where we create an abstract Method called getStatusCode() return an HttpStatus.
+       *create some exceptions who extends from ApiBaseException : 
                   ConflictException : for verification data before we inserted in database
                   RessourceNotFoundException 
                   an Global exception with Annotation `@ExceptionHandler(ApiBaseException.class)` , Overriding handleMethodArgumentNotValid for validation of insertion an updation of data, 
