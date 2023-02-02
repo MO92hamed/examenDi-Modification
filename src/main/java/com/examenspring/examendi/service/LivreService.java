@@ -34,12 +34,10 @@ public class LivreService {
         return livreRepository.findByTitle(title.orElseThrow(() -> new RessourceNotFoundException(String.format("title with title [%s] is not found", title))));
     }*/
 
-    public Livre findLivreByTitle(String title){
-        try{
-            return livreRepository.findByTitle(title);
-        } catch (NoSuchElementException ex){
-            throw new RessourceNotFoundException(String.format("No Record with the title [%s] was found in our database ", title));
-        }
+    public Optional<Livre> findLivreByTitle(String title){
+
+            return Optional.ofNullable(livreRepository.findByTitle(title).orElseThrow(() -> new RessourceNotFoundException(String.format("No Record with the title [%s] was found in our database ", title))));
+
 
     }
 

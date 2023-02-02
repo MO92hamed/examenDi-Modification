@@ -39,8 +39,8 @@ public class LivreController {
     }*/
 
     @GetMapping("/")
-    public ResponseEntity<Livre> getLivreByTitle(@RequestParam String title){
-        Livre livre= livreService.findLivreByTitle(title);
+    public ResponseEntity<Optional<Livre>> getLivreByTitle(@RequestParam String title){
+        Optional<Livre> livre= livreService.findLivreByTitle(title);
         return ResponseEntity.ok(livre);
     }
 
