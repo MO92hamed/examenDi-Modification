@@ -41,6 +41,7 @@ public class LivreController {
         return ResponseEntity.ok(livres);
     }*/
 
+    // get Livre by title rest api
     @GetMapping("/")
     public ResponseEntity<Optional<Livre>> getLivreByTitle(@RequestParam String title){
         Optional<Livre> livre= livreService.findByTitle(title);
