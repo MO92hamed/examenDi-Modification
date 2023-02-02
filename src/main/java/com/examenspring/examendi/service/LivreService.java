@@ -7,7 +7,6 @@ import com.examenspring.examendi.repository.LivreRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -34,7 +33,7 @@ public class LivreService {
         return livreRepository.findByTitle(title.orElseThrow(() -> new RessourceNotFoundException(String.format("title with title [%s] is not found", title))));
     }*/
 
-    public Optional<Livre> findLivreByTitle(String title){
+    public Optional<Livre> findByTitle(String title){
 
             return Optional.ofNullable(livreRepository.findByTitle(title).orElseThrow(() -> new RessourceNotFoundException(String.format("No Record with the title [%s] was found in our database ", title))));
 
@@ -55,10 +54,11 @@ public class LivreService {
     }
 
     public Livre createNewLivre(Livre livre){
-        if(livreRepository.findByTitle(livre.getTitle()) != null){
+        if(livreRepository.findBookByTitle(livre.getTitle()) != null){
             throw new ConflictException("Another record with the same title exists in our database");
         }
-        return livreRepository.save(livre);
+        else
+            return livreRepository.save(livre);
     }
 
     public Livre updateById(Long id, Livre livre){
