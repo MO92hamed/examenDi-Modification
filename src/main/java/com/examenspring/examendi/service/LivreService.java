@@ -69,6 +69,9 @@ public class LivreService {
         book.setTitle(livre.getTitle());
         book.setDescription(livre.getDescription());
 
-        return livreRepository.save(book);
+        if(livreRepository.findBookByTitle(book.getTitle()) != null) {
+            throw new ConflictException("Another record with the same title exists in our database, Please choose another title ..");
+        } else
+            return livreRepository.save(book);
     }
 }
